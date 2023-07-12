@@ -1,86 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Speaker Page</title>
-  <!-- Include Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./asset/css/RoomControl.css">
+  <title>Echo-Global</title>
 </head>
 <body>
-  <h1>Speaker Page</h1>
-  <button id="callButton">Call Receiver</button>
-  <audio id="remoteAudio" autoplay></audio>
+    <div class="body" >
+        <div class="container">
+            <div class="connection">
+                <div class="box">
+                  <div class="card-header rounded shadow">
+                    <div class="title">Echo-Global</div>
+                  </div>
+                  <div class="card-body">
+                    <div>
+                        <div id="notification" class="alert d-none" role="alert"></div>
+                    </div>
+                    <div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="input-box">
+                            <input id="name" type="text"  placeholder="Enter your Name" required>
+                            <div class="underline"></div>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="input-box">
+                              <input id="roomID" type="text"  placeholder="Enter room ID" required>
+                              <div class="underline"></div>
+                            </div>
+                          </div>
+                        <div class="col-md-12 mt-1">
+                          <div class="input-box button text-center">
+                            <button class="createroom  btn-lg  shadow"  id="createbtn">Create Room</button>
+                            <button class="joinerroom  btn-lg shadow"  id="joinbtm">Join Room</button>
+                          </div>
+                        </div>
+<!--
+                        <div class="col-md-12 mt-1" id="">
+                          <div class="input-box button text-center">
+                            <a class="shareRoom" target="_blank" href="http://127.0.0.1:5500/Room/?type=join&name=javith&roomid=12345678">Click to Share Your Room.</a>
+                            <br>
+                            <a class="yourRoom" target="_blank" href="http://127.0.0.1:5500/Room/?type=join&name=javith&roomid=12345678">Click to Open Your Room.</a>   
+                          </div>
+                        </div>
+                        -->
+                        <div class="col-md-12 mt-5">
+                            <div class="text-center text-light">
+                                <p>Developed by <a href="https://dayanidiportfolio.github.io/" target="_blank">Dayanidi</a></p>
+                              </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>  
+            </div>
+          </div>
 
-  <script>
-    // Initialize Firebase
-    var firebaseConfig = {
-      apiKey: "AIzaSyC1QgZw1hNhesqrq7gU-B4-IAKScY9ACdE",
-    authDomain: "echo-b2f1f.firebaseapp.com",
-    projectId: "echo-b2f1f",
-    storageBucket: "echo-b2f1f.appspot.com",
-    messagingSenderId: "795689625860",
-    appId: "1:795689625860:web:9bcf69b393cc66ebdd4851",
-    measurementId: "G-KZ2YBEV61X"
-    };
-    firebase.initializeApp(firebaseConfig);
+   
 
-    // Get a reference to the Firebase Realtime Database
-    var database = firebase.database();
-    var signalingRef = database.ref('calls').push();
-
-    // Create local RTCPeerConnection
-    var localConnection = new RTCPeerConnection();
-
-    // Get local media stream
-    navigator.mediaDevices.getUserMedia({ audio: true })
-      .then(function(stream) {
-        // Add local stream to connection
-        stream.getTracks().forEach(function(track) {
-          localConnection.addTrack(track, stream);
-        });
-      })
-      .catch(function(error) {
-        console.error('Error accessing media devices:', error);
-      });
-
-    // Handle call button click event
-    var callButton = document.getElementById('callButton');
-    callButton.addEventListener('click', function() {
-      // Generate a unique call ID
-      var callId = signalingRef.key;
-
-      // Listen for changes in signaling data
-      signalingRef.child('signalingData').on('value', function(snapshot) {
-        var signalingData = snapshot.val();
-
-        if (signalingData && signalingData.type === 'answer') {
-          // Create remote RTCSessionDescription using the received answer
-          var remoteDescription = new RTCSessionDescription(signalingData);
-
-          // Set remote description on the local peer connection
-          localConnection.setRemoteDescription(remoteDescription);
-        }
-      });
-
-      // Create offer
-      localConnection.createOffer()
-        .then(function(offer) {
-          // Set local description
-          return localConnection.setLocalDescription(offer);
-        })
-        .then(function() {
-          // Update signaling data in Firebase Realtime Database
-          return signalingRef.update({
-            signalingData: {
-              type: localConnection.localDescription.type,
-              sdp: localConnection.localDescription.sdp
-            }
-          });
-        })
-        .catch(function(error) {
-          console.error('Error creating or setting local description:', error);
-        });
-    });
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/simple-peer/simplepeer.min.js"></script>
+  <script src="./asset/js/RoomControl.js" type="module"> </script>
 </body>
 </html>
