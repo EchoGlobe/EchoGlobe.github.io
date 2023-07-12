@@ -153,16 +153,15 @@ const getJoinerID = async (roomId) => {
     }
   };
 
-const deleteRoom = async(roomID)=>{
-    const roomRef = firebase.database().ref(`Rooms/${roomId}`);
-
-    roomRef.remove()
-  .then(() => {
-    console.log("Node removed successfully");
-  })
-  .catch((error) => {
-    console.error("Error removing node:", error);
-  });
-}
+  const deleteRoom = async (roomID) => {
+    try {
+      const roomRef = ref(database, `Rooms/${roomID}`);
+      await set(roomRef, null);
+      console.log("Room removed successfully");
+    } catch (error) {
+      console.error("Error removing room:", error);
+    }
+  }
+  
 
 export { createRoom, checkRoom, createrUpdateRoom, JoinerUpdateRoom,getcreaterID, getJoinerID ,deleteRoom };
