@@ -26,12 +26,17 @@ return name.value !== "" && roomID.value !== "";
 
 document.getElementById("createbtn").addEventListener("click",async ()=>{
     if (checkValue()) {
-       const result = await createRoom(name.value,roomID.value);
+        const Check = await checkRoom(roomID.value);
+       if (Check !== true){
+        const result = await createRoom(name.value,roomID.value);
        if (result === true){
         showNotification(0, "Done", true);
         location.href = `/Room/?type=create&name=${name.value}&roomid=${roomID.value}`;
        }else{
         showNotification(0, "Room not create", false);
+       }
+       }else{
+        showNotification(0, "Room ID is already exit", false);
        }
     } else {
     showNotification(0, "Name and RoomID Required", false);
@@ -51,8 +56,3 @@ document.getElementById("joinbtm").addEventListener("click",async ()=>{
     showNotification(0, "Name and RoomID Required", false);
     }
 });
-
-
-
-
-
