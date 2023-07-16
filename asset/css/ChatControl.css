@@ -41,6 +41,8 @@ body{
   padding: 10px;
 }
 
+
+
 .message-container {
   height: 100%;
   overflow-y: scroll;
@@ -71,68 +73,104 @@ body{
   background-color:#686868;
   align-self: flex-end;
   color: #fff;
+ 
+}
+.textmessage .sent b{
+  text-align: center;
+  align-items: end;
 }
 
+#progressBar {
+  width: 100px;
+  height: 20px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+#progressBarFill {
+  height: 100%;
+  width: 0%;
+  background-color: #4caf50;
+  transition: width 0.2s ease-in-out;
+}
 .imagemessage.received {
-  background-color: #e5e5ea;
-  border-radius: 15px;
-  padding: 10px;
+  background-color: #232323;
   margin-bottom: 10px;
   margin-right: 5px;
-  
   max-width: 70%;
-  border-radius: 0 50px 50px 60px;
+  border-radius: 0 15px 50px 50px;
   align-self: flex-start;
+  color: #fff;
 }
 
 .imagemessage.sent {
+  text-align: right;
   max-width: 70%;
   margin-bottom: 10px;
   margin-left: 5px;
   margin-right: 5px;
-  padding: 1px;
-  border-radius: 50px 0px 50px 50px;
-  background-color: #f3f3f8;
+  border-radius: 15px 0px 50px 50px;
+  background-color:#686868;
   align-self: flex-end;
+  color: #fff;
+
 }
-.imagemessage img {
-max-width: 100%;
-border-radius: 50px;
-height: auto;
-object-fit: container;
+.imagemessage.sent b{
+  text-align: right;
 }
 
+.imagemessage img{
+  max-width: 100%;
+  height: auto;
+object-fit: contain;
+}
+.imagemessage.sent img {
+
+border-radius: 15px 0px 15px 15px;
+
+}
+
+.imagemessage.received img {
+  border-radius: 0px 15px 50px 50px;
+  }
+  
 .videomessage.received {
-  background-color: #e5e5ea;
-  border-radius: 15px;
-  padding: 10px;
+  background-color:  #232323;
   margin-bottom: 10px;
   margin-right: 5px;
-  
   max-width: 70%;
-  border-radius: 0 50px 50px 60px;
+  border-radius: 0 50px 50px 50px;
   align-self: flex-start;
 }
 
+.videomessage.received b{
+  margin-left: 10px;
+}
+
 .videomessage.sent {
+  text-align: right;
   max-width: 70%;
   margin-bottom: 10px;
   margin-left: 5px;
   margin-right: 5px;
-  padding: 10px;
   border-radius: 50px 0px 50px 50px;
-  background-color: #f3f3f8;
+  background-color:#686868;
   align-self: flex-end;
+}
+
+.videomessage.sent b{
+ text-align:left;
 }
 .videomessage video { 
 max-width: 100%;
 border-radius: 50px;
 height: auto;
-object-fit: container;
 }
 
 .docmessage.received{
-  background-color: #e5e5ea;
+  background-color: #232323;
   border-radius: 15px;
   padding: 10px;
   margin-bottom: 10px;
@@ -143,10 +181,11 @@ object-fit: container;
   grid-template-columns: repeat(1, 1fr); /* Adjust the number and size as needed */
   grid-gap: 10px; /* Adjust the gap between images */
   place-items: center;
+  color:#e5e5ea;
 }
 
 .docmessage.sent{
-  background-color: #e5e5ea;
+  background-color:#686868;
   border-radius: 15px;
   padding: 10px;
   margin-bottom: 10px;
@@ -157,15 +196,20 @@ object-fit: container;
   grid-template-columns: repeat(1, 1fr); /* Adjust the number and size as needed */
   grid-gap: 10px; /* Adjust the gap between images */
   place-items: center;
-  
+  color:#ffffff;
 }
 .file { 
-max-width: 100%;
+max-width: 50%;
 height: auto;
 object-fit: container;
 font-size: 60px;
 margin: 10px;
-color: #000000;
+color: #ffffff;
+}
+
+.docmessage.send.center{
+  display: grid;
+  place-items: center;
 }
 
 .filename{
