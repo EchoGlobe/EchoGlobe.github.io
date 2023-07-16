@@ -139,3 +139,11 @@ transition: all 0.3s ease;
 letter-spacing: 2px;
 background: linear-gradient(to left,#686868  0%, #000000  100%);
 }
+
+.link{
+    color: #000000;
+    font-weight: bold;
+}
+.link:hover{
+    text-decoration: none;
+}
