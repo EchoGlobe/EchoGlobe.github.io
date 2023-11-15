@@ -11,7 +11,7 @@ function showNotification(notify,message, success) {
   if (success === true) {
     notification.classList.remove('error');
     notification.classList.add('success');
-  } else {
+  } else { 
     notification.classList.remove('success');
     notification.classList.add('error');
   }
