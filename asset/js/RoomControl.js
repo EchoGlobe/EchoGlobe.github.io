@@ -9,11 +9,11 @@ function showNotification(notify,message, success) {
   notification.innerHTML = message;
   notification.classList.remove('d-none');
   if (success === true) {
-    notification.classList.remove('alert-danger');
-    notification.classList.add('alert-info');
+    notification.classList.remove('error');
+    notification.classList.add('success');
   } else {
-    notification.classList.remove('alert-info');
-    notification.classList.add('alert-danger');
+    notification.classList.remove('success');
+    notification.classList.add('error');
   }
   setTimeout(function () {
     notification.classList.add('d-none');
