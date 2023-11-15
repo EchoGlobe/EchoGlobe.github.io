@@ -150,5 +150,5 @@ background: linear-gradient(to left,#686868  0%, #000000  100%);
  
 /* Note Box Icon */
 .notes{position:relative;border-radius:4px;display:block;font-size:14px;margin:16px 0;padding:12px 24px 12px 60px} .notes:before{float:left;font-size:30px; font-family:FontAwesome;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;word-wrap:normal;margin-left:-46px;margin-top:-10px}
-.notes1:before{color:#21a796;content:'\f087';} .success{background:#cfffe6;color:#565656}
-.notes2:before{color:#f95060;content:'\f088';} .error{background:#f9bfc5;color:#565656}
+.notes1:before{color:#21a796;content:'\f087 👍';} .success{background:#cfffe6;color:#565656}
+.notes2:before{color:#f95060;content:'\f088 👎';} .error{background:#f9bfc5;color:#565656}
