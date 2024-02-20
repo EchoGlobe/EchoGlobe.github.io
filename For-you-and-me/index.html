@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
+    <title>Chat for you and me </title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f2f2f2;
+            font-family: "Fredoka", sans-serif;
+            font-optical-sizing: auto;
+            font-style: normal;
+        }
+
+        .chat {
+            position: fixed;
+            background-color: #fff;
+            top: 10px;
+            bottom: 10px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            /* Set width for vertical scrollbar */
+            height: 10px;
+            /* Set height for horizontal scrollbar */
+        }
+
+        ::-webkit-scrollbar-track {
+
+            border-radius: 5px;
+            background: #c4c4c4;
+            /* Color of the track (background) */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            cursor: pointer;
+            border-radius: 5px;
+            background: #505050;
+            /* Color of the scrollbar thumb */
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ffffff;
+            /* Color of the scrollbar thumb on hover */
+        }
+
+        .header {
+            background-color: #b5daff;
+            padding: 10px;
+        }
+
+
+
+        .message-container {
+            height: 100%;
+            overflow-y: scroll;
+            background: transparent;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .textmessage.received {
+            background-color: #e9e9e9;
+            color: #000000;
+            padding: 10px;
+            margin-bottom: 10px;
+            margin-right: 5px;
+            max-width: 70%;
+            border-radius: 0 15px 15px 25px;
+            align-self: flex-start;
+        }
+
+        .textmessage.sent {
+            max-width: 70%;
+            margin-bottom: 10px;
+            margin-left: 5px;
+            margin-right: 5px;
+            padding: 10px;
+            text-align: right;
+            border-radius: 15px 0px 15px 15px;
+            background-color: #f4f4f4;
+            align-self: flex-end;
+            color: #000000;
+
+        }
+
+        .textmessage .sent b {
+            text-align: center;
+            align-items: end;
+        }
+
+
+
+        textarea {
+            resize: none;
+        }
+
+        #sendMessage {
+            font-size: small;
+        }
+
+        #messageInput {
+            font-size: large;
+            height: 70%;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 5px;
+        }
+
+
+
+
+        .sendbtn {
+            font-size: 35px;
+        }
+
+        @media screen and (min-width: 760px) {
+            .chat {
+                width: 50%;
+            }
+
+            .message img {
+                width: 50%;
+            }
+
+            .message video {
+                width: 50%;
+            }
+
+            .imagemessage.received,
+            .imagemessage.sent {
+                max-width: 35%;
+            }
+
+            .videomessage.received,
+            .videomessage.sent {
+                max-width: 35%;
+            }
+
+            .image-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-gap: 10px;
+            }
+
+            .video-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-gap: 10px;
+            }
+
+            b {
+                font-size: larger;
+            }
+        }
+
+        b {
+            font-size: large;
+        }
+
+        .message-timestamp {
+            font-size: small;
+            color: #868686;
+        }
+
+        #logout {
+            position: absolute;
+            text-align: right;
+            top: 0px;
+            right: 5px;
+            cursor: pointer;
+        }
+
+        #logout:hover {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <body class="container">
+        <div class="chat">
+            <div class="container mt-2 text-center">
+                <div class="row">
+                    <div class="col-12">
+                         <h3 id="status" style="color:red;">Offline</h3>
+                        <span id="logout">logout</span>
+                    </div>
+                </div>
+            </div>
+            <div class="message-container">
+                <div class="textmessage received">
+                    <div>hello 😎</div>
+                </div>
+            </div>
+            <div class="input-container">
+                <textarea id="messageInput" class="form-control ml-2" placeholder="Type your message"
+                    maxlength="4096"></textarea>
+                <button class=" btn btn-white text-danger" id="sendMessage"><i
+                        class="fas fa-paper-plane sendbtn"></i></button>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/simple-peer/simplepeer.min.js"></script>
+    </body>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-database-compat.js"></script>
+
+
+    <script>
+
+        var firebaseConfig = {
+            apiKey: "AIzaSyAtw_7PKFU-Gw6WbPxrXrMFN25KGSnq-ZI",
+            authDomain: "vadivel-cars.firebaseapp.com",
+            databaseURL: "https://vadivel-cars-default-rtdb.firebaseio.com",
+            projectId: "vadivel-cars",
+            storageBucket: "vadivel-cars.appspot.com",
+            messagingSenderId: "98047095896",
+            appId: "1:98047095896:web:a18d40bbf085959957862d",
+            measurementId: "G-ZV95FTJL24"
+        };
+        firebase.initializeApp(firebaseConfig);
+        var database = firebase.database();
+        var detailsRef;
+        var firstUserID;
+        document.addEventListener('DOMContentLoaded', function () {
+            var userID = sessionStorage.getItem('userID');
+            let name;
+            let redirectToLogin = false;
+
+            if (userID) {
+                detailsRef = database.ref('details/' + userID);
+                detailsRef.on('value', function (snapshot) {
+                    if (snapshot.exists()) {
+                        var userObject = snapshot.val();
+                        firstUserID = Object.keys(userObject)[0];
+                        if (firstUserID) {
+                            name = userObject[firstUserID].Name;
+                            if (!userObject[firstUserID].login) {
+                                detailsRef.update({
+                                    [firstUserID + '/login']: true
+                                });
+                                // Set up onDisconnect to update login status to false when the user disconnects
+                                detailsRef.child(firstUserID + '/login').onDisconnect().set(false);
+                            }
+                        } else {
+                            redirectToLogin = true;
+                        }
+                    } else {
+                        redirectToLogin = true;
+                    }
+                });
+            } else {
+                redirectToLogin = true;
+            }
+
+            if (redirectToLogin) {
+                location.href = "login.html";
+                return
+            }
+
+
+            var userID1 = 'KnNiAIgtxJQW9gR90ZeKfRcVotk1';
+            var userID2 = 'oi5H1yCumbWr2hlbhd7tMgWe5ew2';
+
+            var detailsRef1 = database.ref('details/' + userID1);
+            var detailsRef2 = database.ref('details/' + userID2);
+
+            function checkLoginStatus(snapshot) {
+                return new Promise((resolve) => {
+                    if (snapshot.exists()) {
+                        var userObject = snapshot.val();
+                        var firstUserID = Object.keys(userObject)[0];
+                        if (firstUserID) {
+                            var loginStatus = userObject[firstUserID].login;
+                            resolve(loginStatus);
+                        } else {
+                            resolve(false);
+                        }
+                    } else {
+                        resolve(false);
+                    }
+                });
+            }
+
+            function updateStatus(loginStatus1, loginStatus2) {
+                const status = document.getElementById("status");
+                if (loginStatus1 && loginStatus2) {
+                    status.innerText = "Online";
+                    status.style.color = "green";
+                } else {
+                    status.innerText = "Offline";
+                    status.style.color = "red";
+                }
+            }
+
+            detailsRef1.on('value', function (snapshot1) {
+                detailsRef2.on('value', function (snapshot2) {
+                    Promise.all([
+                        checkLoginStatus(snapshot1),
+                        checkLoginStatus(snapshot2)
+                    ]).then((loginStatusArray) => {
+                        var [loginStatus1, loginStatus2] = loginStatusArray;
+                        updateStatus(loginStatus1, loginStatus2);
+                    }).catch((error) => {
+                        console.error('Error:', error);
+                    });
+                });
+            });
+
+
+            var messageInput = document.getElementById('messageInput');
+            var sendMessageButton = document.getElementById('sendMessage');
+            var messageContainer = document.querySelector('.message-container');
+
+            function sendMessage(message) {
+                var messagesRef = database.ref('messages');
+                messagesRef.push({
+                    text: message,
+                    sender: name,
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                });
+            }
+
+            messageInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                    e.preventDefault(); // Prevents a newline from being added to the textarea
+                    var messageText = messageInput.value.trim();
+                    if (messageText !== '') {
+                        sendMessage(messageText);
+                        messageInput.value = '';
+                    }
+                }
+            });
+
+            sendMessageButton.addEventListener('click', function () {
+                var messageText = messageInput.value.trim();
+                if (messageText !== '') {
+                    sendMessage(messageText);
+                    messageInput.value = '';
+                }
+            });
+
+
+            function displayReceivedMessage(message, sender, timestamp) {
+                var messageFragment = document.createDocumentFragment();
+
+                var messageDiv = document.createElement('div');
+                var date = new Date(timestamp);
+                var formattedDate = date.toDateString();
+                var formattedTime = date.toLocaleTimeString();
+
+                if (sender === name) {
+                    messageDiv.classList.add('textmessage', 'sent');
+                } else {
+                    messageDiv.classList.add('textmessage', 'received');
+                }
+
+                messageDiv.innerHTML = '<div>' + message + '</div><span class="message-timestamp">' + formattedDate + ' ' + formattedTime + '</span>';
+                messageFragment.appendChild(messageDiv);
+
+                messageContainer.appendChild(messageFragment);
+                messageContainer.scrollTop = messageContainer.scrollHeight;
+                // Check if the tab is hidden
+                if (document.hidden) {
+                    showNotification("New Message", message);
+                }
+            }
+
+            // Function to show a notification
+            function showNotification(title, message) {
+                // Check if the browser supports notifications
+                if ("Notification" in window) {
+                    // Check if permission is granted
+                    if (Notification.permission === "granted") {
+                        new Notification(title, { body: message });
+                    } else if (Notification.permission !== "denied") {
+                        // Ask for permission
+                        Notification.requestPermission().then(function (permission) {
+                            if (permission === "granted") {
+                                new Notification(title, { body: message });
+                            }
+                        });
+                    }
+                }
+            }
+
+
+            // Listen for visibility change events
+            document.addEventListener("visibilitychange", function () {
+                // If the tab becomes visible, you can clear the notification
+                if (!document.hidden) {
+                    // Clear the notification (you can add additional logic if needed)
+                    // For example, you might want to remove the notification from the notification center
+                }
+            });
+            function listenForMessages() {
+                var messagesRef = database.ref('messages');
+                messagesRef.on('child_added', function (snapshot) {
+                    var message = snapshot.val().text;
+                    var sender = snapshot.val().sender;
+                    var timestamp = snapshot.val().timestamp;
+                    displayReceivedMessage(message, sender, timestamp);
+                });
+            }
+
+            listenForMessages();
+            document.getElementById("logout").addEventListener("click", () => {
+                sessionStorage.clear();
+                detailsRef.update({
+                    [firstUserID + '/login']: false
+                });
+                location.reload();
+            });
+        });
+        window.addEventListener('beforeunload', function (e) {
+            var confirmationMessage = 'Are you sure you want to leave this page? If you leave this page, the room will be deleted.';
+
+            // Update login status to false when the user leaves
+            detailsRef.update({
+                [firstUserID + '/login']: false
+            });
+
+            // Required for Chrome
+            e.returnValue = confirmationMessage;
+
+            // Required for other browsers
+            return confirmationMessage;
+        });
+
+
+
+    </script>
+
+
+
+</html>
