@@ -447,23 +447,6 @@
                 location.reload();
             });
         });
-        window.addEventListener('beforeunload', function (e) {
-            var confirmationMessage = 'Are you sure you want to leave this page? If you leave this page, the room will be deleted.';
-
-            // Update login status to false when the user leaves
-            detailsRef.update({
-                [firstUserID + '/login']: false
-            });
-
-            // Required for Chrome
-            e.returnValue = confirmationMessage;
-
-            // Required for other browsers
-            return confirmationMessage;
-        });
-
-
-
     </script>
 
 
